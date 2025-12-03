@@ -31,9 +31,9 @@ Setting up typescript types, compiler options, strict mode etc
   }
   ```
 
----
+  If a value is not provided the default is used
 
-If a value is not provided the default is used
+---
 
 - Literal Types
   ```typescript
