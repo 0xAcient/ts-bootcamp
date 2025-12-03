@@ -18,7 +18,7 @@
   "scripts": {
     "prepare": "husky",
     "build": "tsc",
-    "dev": "ts-node week-1/src/index.ts",
+    "dev": "ts-node /src/index.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write",
     "test": "vitest"
