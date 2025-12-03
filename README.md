@@ -7,7 +7,8 @@
 ## Typescript Fundamentals
 
 Setting up typescript types, compiler options, strict mode etc
-###Day-1
+
+### Day-1
 
 - Set up a git repository
 - install necessary dependencies
