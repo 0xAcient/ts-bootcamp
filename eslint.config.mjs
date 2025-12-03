@@ -5,11 +5,11 @@ import tsParser  from "@typescript-eslint/parser";
 export default [
   js.configs.recommended,
   {
-    files: ["week-1/src/**/*.ts"],
+    files: ["src/**/*.ts"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: "./week-1/tsconfig.json",
+        project: "./tsconfig.json",
       },
     },
     plugins: {
