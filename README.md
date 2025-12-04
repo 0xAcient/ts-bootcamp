@@ -65,15 +65,15 @@ interface User {
     id: string;
     name: string;
     birthYear: number;
-    calculateAge: (age: number) => number;
+    calculateAge: (year: number) => number;
   };
 
   const user: User = {
     name: 'Sam',
     birthYear: 1990,
-    calculateAge: (age: number) => {
+    calculateAge: (year: number) => {
       const currentYear = new Date().getFullYear();
-      return currentYear - age;
+      return currentYear - year;
     },
   };
   ```
