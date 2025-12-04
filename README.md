@@ -40,3 +40,40 @@ Setting up typescript types, compiler options, strict mode etc
   const size: 'small' | 'medium' | 'large';
   ```
   can only be any one of the 3 specified values any other value will throw an error
+
+### Day-3
+
+#### Interface and Type Aliases
+
+- interface: Allows you to create an object like type
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  birthYear: number;
+  calculateAge: (age: number) => number;
+}
+```
+
+---
+
+- type: type also serve the same function as interface but the main difference is interface can be extended and new properties can be added but type can't take in new property unless you modify the orginal declaration
+
+  ```typescript
+  type User = {
+    id: string;
+    name: string;
+    birthYear: number;
+    calculateAge: (age: number) => number;
+  };
+
+  const user: User = {
+    name: 'Sam',
+    birthYear: 1990,
+    calculateAge: (age: number) => {
+      const currentYear = new Date().getFullYear();
+      return currentYear - age;
+    },
+  };
+  ```
