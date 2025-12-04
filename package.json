@@ -20,7 +20,7 @@
     "build": "tsc",
     "dev": "ts-node /src/playground.ts",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,json,md}\"",
     "test": "vitest"
   },
   "lint-staged": {
