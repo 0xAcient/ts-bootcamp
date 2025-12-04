@@ -26,7 +26,7 @@ export function displayUser(u: AppUser): string {
     return `User: ${u.name} (id: ${u.id})`;
   }
 
-  return `Guest: ${u.name} (no Account)`
+  return `Guest: ${u.name} (no account)`
 
 }
 
@@ -38,7 +38,7 @@ export function makeUser(id: string, name: string, email: string): User {
     id,
     name,
     email,
-    createdAt: new Date().toLocaleString()
+    createdAt: new Date()
   }
 
   return newUser;

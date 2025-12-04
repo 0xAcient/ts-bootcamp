@@ -77,3 +77,13 @@ interface User {
     },
   };
   ```
+
+  ### Generics
+
+  Generics let us write functions, classes, or types that work with any type while keeping type safety. Instead of hardcoding a type like string or number.
+
+  ```typescript
+  function identity<T>(value: T): T {
+    return T;
+  }
+  ```

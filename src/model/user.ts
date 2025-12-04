@@ -2,7 +2,7 @@ export interface User {
     readonly id: string;
     name: string;
     email?: string;
-    readonly createdAt: string;
+    readonly createdAt: Date;
 }
 
 export interface Admin extends User {
