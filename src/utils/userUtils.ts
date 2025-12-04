@@ -1,4 +1,4 @@
-import { Admin, AppUser, User } from '../model/user';
+import { Admin, AppUser, User } from '../models/user';
 
 /**
  * isAdmin a function to check is the passing user obect is an Admin
