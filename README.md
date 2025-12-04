@@ -8,7 +8,7 @@
 
 Setting up typescript types, compiler options, strict mode etc
 
-### Day-1
+#### Setup
 
 - Set up a git repository
 - install necessary dependencies
@@ -16,7 +16,7 @@ Setting up typescript types, compiler options, strict mode etc
 - ESLint for liniting issues
 - prettier: for config accross IDE
 
-### Day-2
+#### Union Types & Optional Parameters
 
 - Union types
   ```typescript
@@ -41,9 +41,9 @@ Setting up typescript types, compiler options, strict mode etc
   ```
   can only be any one of the 3 specified values any other value will throw an error
 
-### Day-3
+---
 
-#### Interface and Type Aliases
+### Interface and Type Aliases
 
 - interface: Allows you to create an object like type
 
@@ -78,12 +78,14 @@ interface User {
   };
   ```
 
-  ### Generics
+---
 
-  Generics let us write functions, classes, or types that work with any type while keeping type safety. Instead of hardcoding a type like string or number.
+### Generics
 
-  ```typescript
-  function identity<T>(value: T): T {
-    return T;
-  }
-  ```
+Generics let us write functions, classes, or types that work with any type while keeping type safety. Instead of hardcoding a type like string or number.
+
+```typescript
+function identity<T>(value: T): T {
+  return T;
+}
+```
