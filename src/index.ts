@@ -5,3 +5,5 @@ export * from './repeatStr';
 export * from './utils/userUtils';
 export * from './models/user';
 export * from './genericUtils';
+export * from './enums';
+export * from './tuples'

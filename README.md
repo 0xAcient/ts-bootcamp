@@ -89,3 +89,47 @@ function identity<T>(value: T): T {
   return T;
 }
 ```
+
+### Enums & Tuples
+
+Enums allows you name a set of related value. e.g (status codes, modes, directions).
+There are two common flavours of enum in typescript.
+
+- Numeric enums (default): members map to number
+  ```typescript
+  enum Status {
+    Error, // 0
+    Pending, // 1
+    Success, // 2
+  }
+  ```
+- String enums: member map to string
+
+  ```typescript
+  enum Status {
+    Error = 'ERROR',
+    Pending = 'PENDING',
+    Success = 'SUCCESS',
+  }
+  ```
+
+  Tuples are fixed-length arrays with known types at each position, they are useful for returning multiple heterogenous values with fixed positions. e.g([value, error], [x, y]).
+
+- ```typescript
+  type Point = [number, number];
+  const p: Point = [-1, 3];
+
+  type Result = [boolean, string?];
+  const ok: Result = [true];
+  const fail: Result: [false, "Something went wrong"];
+
+  // You can also you generic types if your are not sure of the type
+  type Response<T> = [data: T | null, error: string | null];
+
+  function getResponeFromApi(data: T):Response<T> {
+    if (data) {
+      return [data, null];
+    }
+    return [null, "Something went wrong"];
+  }
+  ```
