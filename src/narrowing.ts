@@ -12,8 +12,11 @@ export function describeUser(user: User): string {
       return `User ID: ${user.id}`;
 
     case "guest":
-      return "Guest user"
-  }
+      return "Guest user";
+       }
+
+   return "role not found";
+
     }
 
 
