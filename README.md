@@ -133,3 +133,34 @@ There are two common flavours of enum in typescript.
     return [null, "Something went wrong"];
   }
   ```
+
+### Union Types & Type Narrowing
+
+- Union Types: This allows you to have several types, but only one at a time.
+
+  ```typescript
+  let value: string | number;
+  value = 'hello world'; // OK
+  value = 42; // OK
+  value = false; // Error
+
+  //Common problem with unions
+  function printLength(value: string | number) {
+    return value.length; // Error if value = number
+  }
+  ```
+
+- Narrowing: Type Narrowing means proving to typescript which type you're dealing with.
+
+```typescript
+//typeof
+function printLength(value: string | number) {
+  if (typeof value === 'string') {
+    return value.length; // OK
+  }
+
+  return value.toString().length; // number path
+}
+
+/** Narrowing can be done in various ways e.g using equality checks, using in with objects and also using switch case */
+```
