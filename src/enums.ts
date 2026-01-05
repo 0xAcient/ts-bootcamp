@@ -5,8 +5,8 @@ export enum LogLevel {
   Error = "ERROR"
 }
 
-export function formatLog(level: LogLevel): string {
-  return `${[level]} message`
+export function formatLog(level: LogLevel, message: string): string {
+  return `[${level}] ${message}`
 }
 
 export function isSevere(level: LogLevel): boolean {
