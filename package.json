@@ -27,8 +27,7 @@
     "src/**/*.ts": [
       "eslint --fix",
       "prettier --write",
-      "tsc --noEmit",
-      "git add"
+      "tsc --noEmit"
     ]
   }
 }
