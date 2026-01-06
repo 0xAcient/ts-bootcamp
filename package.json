@@ -24,7 +24,7 @@
     "test": "vitest"
   },
   "lint-staged": {
-    "week-1/**/*.ts": [
+    "src/**/*.ts": [
       "eslint --fix",
       "prettier --write"
     ]
