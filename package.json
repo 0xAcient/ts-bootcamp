@@ -18,13 +18,13 @@
   "scripts": {
     "prepare": "husky",
     "build": "tsc",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node ./src/playground.ts",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,json,md}\"",
     "test": "vitest"
   },
   "lint-staged": {
-    "week-1/**/*.ts": [
+    "src/**/*.ts": [
       "eslint --fix",
       "prettier --write"
     ]
