@@ -22,17 +22,17 @@ type Role = 'admin' | 'user' | 'guest';
   ```
 
 - Discriminated Unions: This is a union of object types. Each object has:
-  - A shared property (the discriminant)
-  - A unique literal value for that property
+  - A shared property (the discriminant).
+  - A unique literal value for that property.
 
   ```typescript
   type Shape = { type: 'circle'; radius: number } | { type: 'square'; size: number };
   ```
 
   This allows for:
-  - Automatic narrowing
-  - Exhaustiveness checking
-  - Safer refactors
+  - Automatic narrowing.
+  - Exhaustiveness checking.
+  - Safer refactors.
 
 - Exhaustiveness (Why it matters): consider the code below
 
