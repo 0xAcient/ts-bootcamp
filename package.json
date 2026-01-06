@@ -24,6 +24,6 @@
     "test": "vitest"
   },
   "lint-staged": {
-    "./src/**/*.ts": "eslint --fix prettier --write"
+    "**/*.{ts,md}": "eslint --fix prettier --write"
   }
 }
