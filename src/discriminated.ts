@@ -9,8 +9,5 @@ export function describeField(field: Field): string {
       return 'This represent the text field';
     case 'number':
       return 'This represent the number field';
-
-    default:
-      return 'Something went wrong';
   }
 }
