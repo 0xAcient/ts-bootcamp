@@ -4,7 +4,7 @@ type GuestUser = { role: 'guest' };
 
 type User = AdminUser | RegularUser | GuestUser;
 
-export function describeUser(user: User): any {
+export function describeUser(user: User): string {
   switch (user.role) {
     case 'admin':
       return `Admin permissions: ${user.permissions.join(', ')}`;
