@@ -1,4 +1,4 @@
-export function describeValue(input: string | number): string | number {
+export function describeValue(input: string | number): any | number {
   if (typeof input === 'number') {
     return input;
   }
