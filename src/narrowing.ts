@@ -1,22 +1,17 @@
-type AdminUser = {role: "admin"; permissions: string[]};
-type RegularUser = {role: "user"; id: string};
-type GuestUser = {role: "guest"};
+type AdminUser = { role: 'admin'; permissions: string[] };
+type RegularUser = { role: 'user'; id: string };
+type GuestUser = { role: 'guest' };
 
 type User = AdminUser | RegularUser | GuestUser;
 
-export function describeUser(user: User): string {
+export function describeUser(user: User): any {
   switch (user.role) {
-    case "admin": 
-      return `Admin permissions: ${user.permissions.join(", ")}`;
-    case "user":
+    case 'admin':
+      return `Admin permissions: ${user.permissions.join(', ')}`;
+    case 'user':
       return `User ID: ${user.id}`;
 
-    case "guest":
-      return "Guest user";
-       }
-
-   return "role not found";
-
-    }
-
-
+    case 'guest':
+      return 'Guest user';
+  }
+}
