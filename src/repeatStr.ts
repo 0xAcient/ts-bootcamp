@@ -1,3 +1,3 @@
-export function repeatStr(str: string, times: number = 2): string {
+export function repeatStr(str: any, times: number = 2): string {
   return str.repeat(times);
 }
