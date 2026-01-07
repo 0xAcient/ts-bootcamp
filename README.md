@@ -49,3 +49,38 @@ type Role = 'admin' | 'user' | 'guest';
     return 'something went wrong';
   }
   ```
+
+### Indexed Access Types & `keyof`
+
+Indexed access type (also called a lookup type) let you extract the type of a specific property from an object type, array or tuple.
+
+```typescript
+//Basic syntax
+Type[Key];
+
+//example
+type PropertyType<T, K extends keyof T> = T[K];
+
+//Usage
+type User = {
+  id: string;
+  name: string;
+  age: number;
+};
+
+type UserAgeType = PropertyType<User, 'age'>; // number
+let age: UserAgeType = 25; // OK
+age = 'Sam'; // Error
+```
+
+Indexed access type can also be used with functions but in this case the function needs to be generic.
+
+```typescript
+function getProperty<T, K extends typeof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+//the above function make sure any key supplied
+// is a property in the object making it
+//impossible to pass in a wrong key
+```
