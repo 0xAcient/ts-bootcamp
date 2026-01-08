@@ -84,3 +84,42 @@ function getProperty<T, K extends typeof T>(obj: T, key: K): T[K] {
 // is a property in the object making it
 //impossible to pass in a wrong key
 ```
+
+### Mapped Types (Transforming Object Types)
+
+This let you create new types by transforming the properties of an existing types. (i.e They work like a `loop over keys` at the type level)
+
+```typescript
+type Mapped<T> = {
+  [K in keyof T]: T[K];
+};
+
+//This allows us to create a generic type that can be used with any object
+```
+
+Explanation:
+[K in keyof T]: basically means for every K i.e (key in T; T = Object) use that as a key for this type, T[K] then assign the type of that key.
+This basically is like creating a dubplicate of another type and saves you the hassle of retyping everything
+
+```typescript
+type User = {
+  id: string;
+  age: number;
+};
+
+type DuplicateUser = {
+  [K in keyof User]: User[K];
+};
+```
+
+But where mapped types really shine is where you want to preserve the key but change the type
+
+```typescript
+type ReadonlyUser = {
+  readonly [K in keyof User]: User[K];
+};
+
+type OnlyBoolean = {
+  [K in keyof User]: boolean;
+};
+```
