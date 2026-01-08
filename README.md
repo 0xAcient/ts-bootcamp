@@ -144,3 +144,27 @@ type Test = IsString<string>; // true
 type Test2 = IsString<number>; // false
 type Test3 = IsString<string | number>; // returns true | false
 ```
+
+### Combining Advanced Types
+
+This section is more of everything combine by utilizing all what I have learnt so far.
+
+- Filter Keys by Value Type
+
+  ```typescript
+  type Example = {
+    id: string;
+    name: string;
+    active: boolean;
+    count: number;
+  };
+  //Get only keys whose values are strings
+  type KeysOfType<T, V> = {
+    [K in keyof T]: K extends V ? K : never;
+  }[keyof T];
+
+  type StringKeys = KeysOfType<Example, string>;
+  //results to "id" | "name"
+  ```
+
+  This sections contains some really advanced type combines and will be updated according.
