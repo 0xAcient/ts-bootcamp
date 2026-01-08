@@ -123,3 +123,24 @@ type OnlyBoolean = {
   [K in keyof User]: boolean;
 };
 ```
+
+### Conditional Types (Type Logic)
+
+It allows you to create types that depends on a condition, just like a tenary operator (? :) but at the type level.
+This allows Typescript to choose different types based on checks performed on other types.
+
+```typescript
+T extends U ? X : Y;
+```
+
+- If type T is assignable to (extends) U return X
+- Otherwise return Y
+
+```typescript
+type IsString<T> = T extends string ? true : false;
+
+//example
+type Test = IsString<string>; // true
+type Test2 = IsString<number>; // false
+type Test3 = IsString<string | number>; // returns true | false
+```
