@@ -167,4 +167,51 @@ This section is more of everything combine by utilizing all what I have learnt s
   //results to "id" | "name"
   ```
 
-  This sections contains some really advanced type combines and will be updated according.
+  - PickByValue: This type produces an object that includes only properties whose value are of the type that was passed to it. Internally this type make use of `KeyOfType` to streamline the value then convert it to object
+
+  ```typescript
+  type PickByValue<T, V> = {
+    [K in KeyOfType<T, V>]: T[K];
+  };
+  ```
+
+  - NullableToOptional: This type returns a object type where if the passed in object contains null in on of the field properties it should remove the null and convert that field to optional.
+
+  ```typescript
+  type NullableToOptional<T> = {
+    [K in keyof T]: null extends T[K] ? K : undefined extends T[K] ? K : never;
+  }[keyof T];
+  ```
+
+  ### Type-Level Composition & Utilities
+
+  The overall goal of this is to each breaking down types in to junks and reusable part.
+  - Composing Utility Types: Instead of writing one huge type, we chain smaller ones.
+
+  ```typescript
+  type RemoveNullable<T> = T extends null | undefinded ? never : T;
+
+  //Now we can use the above in a mapped type
+  type CleanObject<T> = {
+    [K in keyof T]: RemoveNullable<T[K]>;
+  };
+  ```
+
+  - Filtering Keys + Rebuilding Objects: There's a pattern we are already familiar with;
+
+  ```typescript
+  {
+    [K in keyof T]: condition ? K : never
+  }[keyof T]
+  ```
+
+  The next text is to use filter keys to build a new object
+
+  ```typescript
+  type OnlyStrings<T> = {
+    [K in keyof T as T[K] extends string ? K : never]: T[K];
+  };
+  // The overall idea here is that
+  //`as` let you rename or remove keys
+  // if never is returned key is removed
+  ```
