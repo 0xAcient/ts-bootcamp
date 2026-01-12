@@ -10,7 +10,6 @@ export default [
       parser: tseslint.parser,
       parserOptions: {
         project: "./tsconfig.json",
-        tsconfigRootDir: import.meta.dirname,
       },
     },
     plugins: { js },
