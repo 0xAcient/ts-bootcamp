@@ -1,20 +1,20 @@
 import js from "@eslint/js";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser  from "@typescript-eslint/parser";
+import tseslint from 'typescript-eslint';
 // You can also use import { configs } from "@typescript-eslint/eslint-plugin"
 export default [
   js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    files: ["week-1/src/**/*.ts"],
+    files: ["src/**/*.ts"],
     languageOptions: {
-      parser: tsParser,
+      parser: tseslint.parser,
       parserOptions: {
-        project: "./week-1/tsconfig.json",
+        project: "./tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
       },
     },
-    plugins: {
-      "@typescript-eslint": tsPlugin,
-    },
+    plugins: { js },
+    extends: ["js/recommended"],
     rules: {
       "no-unused-vars": "warn",
       "no-console": "off",
