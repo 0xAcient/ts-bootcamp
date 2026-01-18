@@ -1,217 +1,91 @@
-# Week-2
+# Week-3
 
-## Advanced Types & Type System Patterns
+## readonly, Immutability & Value Semantics
 
-Getting familiar with concepts from `Week-1` and more.
+There's has been certain misconception about `readonly` and what immutabibily actually means in typescript
 
-### Literal Types
+### readonly
 
-A literal type is a value and a type
+readonly prevents reassignment through the type system, not mutation at runtime
 
 ```typescript
-type Role = 'admin' | 'user' | 'guest';
+type User = {
+  readonly id: string;
+  readonly name: string;
+};
+
+const user: User = {
+  id: '1u',
+  name: 'John Doe',
+};
+
+console.log(user.name); // John Doe
+
+// This will throw a compile time error
+// name property is readonly and can't
+// be reassigned
+user.name = 'Mary Jane';
 ```
 
-- Union types: The misconception about union is that it's a variable that can be many things. But the actual correct concept is that, its a closed set of allowed states
+### Value Semantics vs Reference Semantics
 
-  ```typescript
-  type Result = { kind: 'ok'; data: string } | { kind: 'error'; error: string };
-
-  // This is not flexibility
-  // this is a controlled design
-  ```
-
-- Discriminated Unions: This is a union of object types. Each object has:
-  - A shared property (the discriminant).
-  - A unique literal value for that property.
-
-  ```typescript
-  type Shape = { type: 'circle'; radius: number } | { type: 'square'; size: number };
-  ```
-
-  This allows for:
-  - Automatic narrowing.
-  - Exhaustiveness checking.
-  - Safer refactors.
-
-- Exhaustiveness (Why it matters): consider the code below
-
-  ```typescript
-  function area(shape: Shape) {
-    switch (shape.type) {
-      case 'circle':
-        return Math.PI * shape.radius ** 2;
-      case 'square':
-        return shape.size ** 2;
-    }
-
-    // in case none of the case was satisfied
-    return 'something went wrong';
-  }
-  ```
-
-### Indexed Access Types & `keyof`
-
-Indexed access type (also called a lookup type) let you extract the type of a specific property from an object type, array or tuple.
+Reference semantics refers to the same memory, same object
 
 ```typescript
-//Basic syntax
-Type[Key];
+const a = { count: 1 };
 
-//example
-type PropertyType<T, K extends keyof T> = T[K];
+const b = a;
 
-//Usage
-type User = {
+//mutates value of the original object
+b.count = 2;
+
+console.log(a.count); // 2
+```
+
+Value semantics refers to a new object entirely in a seperate memory
+
+```typescript
+const a = { count: 1 };
+
+const b = { ...a, count: 2 };
+
+console.log(a.count); // 1
+```
+
+#### Readonly<T> vs readonly properties
+
+```typescript
+type ReadonlyUser = Readonly<{
   id: string;
   name: string;
-  age: number;
-};
+}>;
 
-type UserAgeType = PropertyType<User, 'age'>; // number
-let age: UserAgeType = 25; // OK
-age = 'Sam'; // Error
-```
-
-Indexed access type can also be used with functions but in this case the function needs to be generic.
-
-```typescript
-function getProperty<T, K extends typeof T>(obj: T, key: K): T[K] {
-  return obj[key];
-}
-
-//the above function make sure any key supplied
-// is a property in the object making it
-//impossible to pass in a wrong key
-```
-
-### Mapped Types (Transforming Object Types)
-
-This let you create new types by transforming the properties of an existing types. (i.e They work like a `loop over keys` at the type level)
-
-```typescript
-type Mapped<T> = {
-  [K in keyof T]: T[K];
-};
-
-//This allows us to create a generic type that can be used with any object
-```
-
-Explanation:
-[K in keyof T]: basically means for every K i.e (key in T; T = Object) use that as a key for this type, T[K] then assign the type of that key.
-This basically is like creating a dubplicate of another type and saves you the hassle of retyping everything
-
-```typescript
-type User = {
-  id: string;
-  age: number;
-};
-
-type DuplicateUser = {
-  [K in keyof User]: User[K];
-};
-```
-
-But where mapped types really shine is where you want to preserve the key but change the type
-
-```typescript
+//equivalent to
 type ReadonlyUser = {
-  readonly [K in keyof User]: User[K];
-};
-
-type OnlyBoolean = {
-  [K in keyof User]: boolean;
+  readonly id: string;
+  readonly name: string;
 };
 ```
 
-### Conditional Types (Type Logic)
-
-It allows you to create types that depends on a condition, just like a tenary operator (? :) but at the type level.
-This allows Typescript to choose different types based on checks performed on other types.
+#### Shallow vs Deep Immuntability
 
 ```typescript
-T extends U ? X : Y;
-```
-
-- If type T is assignable to (extends) U return X
-- Otherwise return Y
-
-```typescript
-type IsString<T> = T extends string ? true : false;
-
-//example
-type Test = IsString<string>; // true
-type Test2 = IsString<number>; // false
-type Test3 = IsString<string | number>; // returns true | false
-```
-
-### Combining Advanced Types
-
-This section is more of everything combine by utilizing all what I have learnt so far.
-
-- Filter Keys by Value Type
-
-  ```typescript
-  type Example = {
-    id: string;
+//this is a shallow readonly
+type State = {
+  readonly user: {
     name: string;
-    active: boolean;
-    count: number;
   };
-  //Get only keys whose values are strings
-  type KeysOfType<T, V> = {
-    [K in keyof T]: K extends V ? K : never;
-  }[keyof T];
+};
 
-  type StringKeys = KeysOfType<Example, string>;
-  //results to "id" | "name"
-  ```
+//which means we can do this
+const state: State = {
+  user: {
+    name: 'Samuel',
+  },
+};
 
-  - PickByValue: This type produces an object that includes only properties whose value are of the type that was passed to it. Internally this type make use of `KeyOfType` to streamline the value then convert it to object
+state.user.name = 'Alice'; // ✅ allowed
 
-  ```typescript
-  type PickByValue<T, V> = {
-    [K in KeyOfType<T, V>]: T[K];
-  };
-  ```
-
-  - NullableToOptional: This type returns a object type where if the passed in object contains null in on of the field properties it should remove the null and convert that field to optional.
-
-  ```typescript
-  type NullableToOptional<T> = {
-    [K in keyof T]: null extends T[K] ? K : undefined extends T[K] ? K : never;
-  }[keyof T];
-  ```
-
-  ### Type-Level Composition & Utilities
-
-  The overall goal of this is to each breaking down types in to junks and reusable part.
-  - Composing Utility Types: Instead of writing one huge type, we chain smaller ones.
-
-  ```typescript
-  type RemoveNullable<T> = T extends null | undefinded ? never : T;
-
-  //Now we can use the above in a mapped type
-  type CleanObject<T> = {
-    [K in keyof T]: RemoveNullable<T[K]>;
-  };
-  ```
-
-  - Filtering Keys + Rebuilding Objects: There's a pattern we are already familiar with;
-
-  ```typescript
-  {
-    [K in keyof T]: condition ? K : never
-  }[keyof T]
-  ```
-
-  The next text is to use filter keys to build a new object
-
-  ```typescript
-  type OnlyStrings<T> = {
-    [K in keyof T as T[K] extends string ? K : never]: T[K];
-  };
-  // The overall idea here is that
-  //`as` let you rename or remove keys
-  // if never is returned key is removed
-  ```
+//The reason it's permissible is because `user`
+//is readonly only not its contents
+```
